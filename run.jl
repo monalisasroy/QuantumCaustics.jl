@@ -38,10 +38,10 @@ Two ways to choose parameters:
      julia --project=. run.jl --N 79 --Jxx 0.5 --hz 1.0 --T 40 --output-dir results/
      julia --project=. run.jl --N 79 --Jxx 0.4 0.6 0.8 1.0 1.2 --hz 1.0 --output-dir results/sweep
 
-Each run writes two observables into the output directory as a .txt, with a matching .png in
-its figures/ subdirectory: the raw magnetisation "Z_<tag>", the measured light cone in which
-the boundary's reversed cone is visible, and the subtracted caustic "dZ_<tag>", in which the
-boundary cancels and the 2/3 scaling lives. Every flag default above is defined in
+Each run writes two observables as a .txt in the output directory, results/ by default, with a
+matching .png in its figures/ subdirectory, results/figures/ by default: the raw magnetisation
+"Z_<tag>", the measured light cone in which the boundary's reversed cone is visible, and the
+subtracted caustic "dZ_<tag>", in which the boundary cancels and the 2/3 scaling lives. Every flag default above is defined in
 src/parameters.jl; edit that file to change a default for every run. Each run logs the
 parameters it resolved, with the centre site, the step count, and the phase, as a double-check
 before it computes. Validation of the
