@@ -1,7 +1,7 @@
 cff-version: 1.2.0
 message: "If you use this software, please cite the paper below."
 title: "QuantumCaustics.jl"
-abstract: "Quantum many-body dynamics simulation: this package provides MPS/TEBD simulation of quantum caustics in the quenched transverse-field Ising chain, cross-checked against exact diagonalisation and a Qiskit circuit. Julia and ITensor. Implementation behind Singh Roy et al., Phys. Rev. A (2026): arXiv:2410.06803"
+abstract: "Quantum many-body dynamics simulation: this package provides MPS/TEBD simulation of quantum caustics in the quenched transverse-field Ising chain, cross-checked at small system sizes against an exact statevector reference, the same brickwall without truncation, and against the true propagator exp(-iHt). Julia and ITensor. Implementation behind Singh Roy et al., Phys. Rev. A (2026): arXiv:2410.06803"
 type: software
 license: Apache-2.0
 repository-code: "https://github.com/monalisasroy/QuantumCaustics.jl"
