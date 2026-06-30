@@ -175,12 +175,12 @@ prop = exact_propagator(spec; N = 9, dt = 0.05, ttotal = 8.0)   # true dynamics 
 
 ```
 QuantumCaustics/
-  Project.toml            one manifest; dependencies resolved on install
+  Project.toml            manifest; dependencies resolved on install
   run.jl                  CLI entry point to the library
-  README.md               usage; method, conventions, and results
+  README.md               context, usage, method, conventions, and results
   LICENSE  CITATION.cff   Apache 2.0 licence; software and paper citation
   docs/                   arXiv preprint, the method walk-through notes
-  references.bib          has citation-key convention
+  references.bib          contains citation-key
   src/                    core functions and utilities
   test/                   runtests.jl, including the exact-engine cross-checks
   notebooks/              caustics_tfim.ipynb, an example notebook illustrating the package
