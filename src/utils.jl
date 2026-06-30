@@ -24,12 +24,6 @@ _write_matrix(path, M) = open(path, "w") do f
 end
 
 """
-    colormap(run; data=run.Z, path=nothing, clabel="Z")
-
-Heatmap of a data matrix, sites against time. Saves to `path` when given and returns the plot
-object. This is the small version of Fig. 2.
-"""
-"""
     colormap(run; data, path, clabel="Z_j", logscale=false)
 
 Render one observable as a spacetime colour map, time on the horizontal axis and site on the
