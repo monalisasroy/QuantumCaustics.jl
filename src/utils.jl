@@ -29,10 +29,34 @@ end
 Heatmap of a data matrix, sites against time. Saves to `path` when given and returns the plot
 object. This is the small version of Fig. 2.
 """
-function colormap(run::CausticRun; data::AbstractMatrix = run.Z, path = nothing, clabel = "Z")
-    p = Plots.heatmap(run.times, 1:run.N, data;
-        xlabel = "time", ylabel = "site j", colorbar_title = clabel,
-        title = @sprintf("TFIM, N=%d", run.N))
+"""
+    colormap(run; data, path, clabel="Z_j", logscale=false)
+
+Render one observable as a spacetime colour map, time on the horizontal axis and site on the
+vertical, in magma on a dark ground, and save it to `path`. With logscale the colour follows a
+base-10 logarithm between 0.005 and 2, the scale on which the caustic fringes read across two
+decades; the magnitude is clamped into that window, so the dark gaps stay on scale and the
+central value of 2 sits at the top. The colourbar is relabelled with the decade values, since
+the heatmap itself holds the logarithm.
+"""
+function colormap(run::CausticRun; data::AbstractMatrix = run.Z, path = nothing,
+                  clabel = "Z_j", logscale::Bool = false)
+    common = (xlabel = "Time, t", ylabel = "Position, j",
+              title = @sprintf("%s    TFIM, Jxx = %.2g, N = %d", clabel, run.spec.Jxx, run.N),
+              color = :magma, grid = false,
+              background_color = :black, background_color_inside = :black,
+              foreground_color = "#dddddd")
+    if logscale
+        vmin, vmax = 0.005, 2.0
+        z = log10.(clamp.(data, vmin, vmax))
+        tk = [0.01, 0.1, 1.0, 2.0]
+        p = Plots.heatmap(run.times, 1:run.N, z;
+            clims = (log10(vmin), log10(vmax)),
+            colorbar_ticks = (log10.(tk), ["0.01", "0.1", "1", "2"]),
+            colorbar_title = "$(clabel) (log scale)", common...)
+    else
+        p = Plots.heatmap(run.times, 1:run.N, data; colorbar_title = clabel, common...)
+    end
     path !== nothing && Plots.savefig(p, path)
     return p
 end
@@ -53,9 +77,10 @@ function write_caustic(res, dir::AbstractString)
     mkpath(figdir)
     tag = run_tag(run)
     _write_matrix(joinpath(dir, "Z_$(tag).txt"), run.Z)
-    colormap(run; data = run.Z, path = joinpath(figdir, "Z_$(tag).png"), clabel = "Z")
+    colormap(run; data = run.Z, path = joinpath(figdir, "Z_$(tag).png"), clabel = "Z_j")
     _write_matrix(joinpath(dir, "dZ_$(tag).txt"), res.dZ)
-    colormap(run; data = res.dZ, path = joinpath(figdir, "dZ_$(tag).png"), clabel = "dZ")
+    colormap(run; data = res.dZ, path = joinpath(figdir, "dZ_$(tag).png"),
+             clabel = "ΔZ_j", logscale = true)
     open(joinpath(dir, "times_$(tag).txt"), "w") do f
         println(f, join(run.times, " "))
     end
