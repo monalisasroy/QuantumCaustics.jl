@@ -1,7 +1,7 @@
 cff-version: 1.2.0
 message: "If you use this software, please cite the paper below."
 title: "QuantumCaustics.jl"
-abstract: "Quantum many-body dynamics simulation. MPS/TEBD simulation of quantum caustics in the quenched transverse-field Ising chain, cross-checked against an exact statevector engine at small system sizes. Julia and ITensor."
+abstract: "Quantum many-body dynamics simulation: this package provides MPS/TEBD simulation of quantum caustics in the quenched transverse-field Ising chain, cross-checked against exact diagonalisation and a Qiskit circuit. Julia and ITensor. Implementation behind Singh Roy et al., Phys. Rev. A (2026): arXiv:2410.06803"
 type: software
 license: Apache-2.0
 repository-code: "https://github.com/monalisasroy/QuantumCaustics.jl"
@@ -10,26 +10,35 @@ authors:
     given-names: "Monalisa"
     orcid: "https://orcid.org/0000-0002-3678-763X"
 keywords:
-  - quantum dynamics
-  - quantum physics
-  - quantum many body
-  - quantum simulation
-  - interacting spins
-  - quantum dynamics
-  - time evolution
-  - caustics
   - quantum caustics
+  - caustics
+  - quantum dynamics
+  - quantum dynamics simulation
+  - quench dynamics
+  - spin dynamics
+  - quantum many body
+  - many-body physics
+  - many-body problem
+  - many-body interactions
+  - nonequilibrium statistical physics
+  - interacting particle system
+  - quantum simulation
+  - quantum physics
+  - transverse-field Ising model
   - matrix product states
+  - tensor networks
   - MPS
   - TEBD
-  - transverse-field Ising model
   - exact diagonalisation
+  - ITensor
+  - Julia
+  - Jupyter notebook
 preferred-citation:
   type: article
   title: "Universal scaling of quantum caustics in the dynamics of interacting particles"
-  year: 2026
-  journal: "Physical Review A"
-  doi: "10.1103/zxz5-9ghf"
+  year: 2024
+  url: "https://arxiv.org/abs/2410.06803"
+  notes: "Preprint on arXiv (quant-ph); accepted in Physical Review A (2026)."
   identifiers:
     - type: other
       value: "arXiv:2410.06803"
