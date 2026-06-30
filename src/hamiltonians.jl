@@ -4,8 +4,14 @@
 # adds a Z Z coupling to that same Hamiltonian to break integrability. So one type carries
 # Jxx, hz, and an optional Jzz: Jzz = 0 is Eq. 1, Jzz > 0 is Eq. 23. The evolver and the
 # exact reference both consume the same two functions, coupling_terms and field_terms, so
-# neither branches on the parameters. Terms are returned in the Pauli
-# normalisation of conventions.jl.
+# neither branches on the parameters.
+#
+# Conventions, stated once here. Terms are returned in the Pauli normalisation of Singh Roy
+# et al. (2026): H = - Jxx sum X_j X_{j+1} - hz sum Z_j (Eq. 1), with - Jzz sum Z_j Z_{j+1}
+# added for Eq. 23. The evolver converts each Pauli term to its ITensors spin-1/2 gate, where
+# S_a = sigma_a / 2; the conversion is pinned against the exact engine in the test suite. The
+# basis is Z|up> = +|up> and Z|down> = -|down>, and the order-to-disorder transition sits at
+# Jxx = hz, read straight off the input with no rescaling.
 
 "Boundary condition for the chain."
 @enum Boundary OPEN PERIODIC

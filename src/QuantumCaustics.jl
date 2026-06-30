@@ -1,12 +1,11 @@
 module QuantumCaustics
 
 # Files are included in dependency order, so the module file is the dependency graph.
-# parameters, conventions, and hamiltonians use only Base. observables and evolution add
+# parameters and hamiltonians use only Base. observables and evolution add
 # the MPS machinery; exact is the dense reference used to validate the evolution in the test
 # suite; utils is the writing, plotting, and instance-loading layer built on a completed run.
 
 include("parameters.jl")
-include("conventions.jl")
 include("hamiltonians.jl")
 include("observables.jl")
 include("evolution.jl")
