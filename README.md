@@ -21,6 +21,8 @@ t = 0 and the caustic fringes propagate outward at the Lieb-Robinson velocity
 v = 2J^xx, obeying the 2/3 power law of an Airy fold throughout the
 paramagnetic phase.*
 
+## Introduction              
+
 Better batteries, new materials, and new medicines depend on how large but finite groups of quantum particles behave together, the subject of many-body quantum dynamics, and that behaviour is hard to compute. Describing N particles exactly takes 2^N numbers, so evolving them means multiplying matrices of that size: for 20 particles, about a million by a million, near 18 terabytes, beyond most computers. Each added particle doubles the dimension, so the cost grows exponentially.
 
 Useful quantum applications involve hundreds or thousands of particles, far more than an exact calculation can hold. One question at that scale is how an error or a perturbation spreads through the dynamics, and bounding that spread in advance shows whether a simulation will hold to tolerance before expensive hardware time is spent on it, instead of running it blind and repeating it.
@@ -194,7 +196,7 @@ The package is also the base for the author's continuing work on quantum dynamic
 
 ## Status and caveats
 
-The package provides the evolution, the measurements, the two observables (the raw magnetisation and the subtracted caustic dZ), and the exact-engine cross-checks (the statevector brickwall and the dense propagator). The power-law fit that turns the caustic into the scaling exponent is left to downstream analysis; the dZ and the time axis a run writes are its input, and anyone with them can run the fit. In the paper the fitted exponent converges near 0.68, close to the theoretical 2/3, and a fully universal finite-size scaling was not reached; NOTES.md records this, and why the inhomogeneous single-flip geometry does not map onto an infinite, translationally invariant MPS. Open boundaries are the setting of the paper's numerics, where the dZ subtraction cancels the boundary.
+The package provides the evolution, the measurements, the two observables (the raw magnetisation and the subtracted caustic dZ), and the exact-engine cross-checks (the statevector brickwall and the dense propagator). The power-law fit that turns the caustic into the scaling exponent can be easily calculated from these. In the paper the fitted exponent converges near 0.68, close to the theoretical 2/3, and a fully universal finite-size scaling was not reached.
 
 ## License
 
