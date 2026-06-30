@@ -1,0 +1,11 @@
+# Paramagnetic phase, weak integrability breaking: the caustic survives (Fig 4b).
+description = "Paramagnetic phase with weak integrability breaking, Jzz = 0.2. The ZZ coupling of Eq. 23 breaks integrability while the caustic and its 2/3 scaling survive."
+N = 79
+Jxx = 0.5
+hz = 1.0
+Jzz = 0.2
+dt = 0.1
+T = 40.0
+maxdim = 256
+cutoff = 1e-12
+boundary = "open"

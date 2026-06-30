@@ -1,0 +1,11 @@
+# Paramagnetic phase, strong integrability breaking: the caustic degrades (Appendix B, Fig 7).
+description = "Paramagnetic phase with strong integrability breaking, Jzz = 0.4. The caustic fades and the power-law fit loses quality, the degradation reported in Appendix B."
+N = 79
+Jxx = 0.5
+hz = 1.0
+Jzz = 0.4
+dt = 0.1
+T = 40.0
+maxdim = 256
+cutoff = 1e-12
+boundary = "open"

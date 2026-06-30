@@ -1,0 +1,50 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite the paper below."
+title: "QuantumCaustics.jl"
+abstract: "Quantum many-body dynamics simulation. MPS/TEBD simulation of quantum caustics in the quenched transverse-field Ising chain, cross-checked against an exact statevector engine at small system sizes. Julia and ITensor."
+type: software
+license: Apache-2.0
+repository-code: "https://github.com/monalisasroy/QuantumCaustics.jl"
+authors:
+  - family-names: "Singh Roy"
+    given-names: "Monalisa"
+    orcid: "https://orcid.org/0000-0002-3678-763X"
+keywords:
+  - quantum dynamics
+  - quantum physics
+  - quantum many body
+  - quantum simulation
+  - interacting spins
+  - quantum dynamics
+  - time evolution
+  - caustics
+  - quantum caustics
+  - matrix product states
+  - MPS
+  - TEBD
+  - transverse-field Ising model
+  - exact diagonalisation
+preferred-citation:
+  type: article
+  title: "Universal scaling of quantum caustics in the dynamics of interacting particles"
+  year: 2026
+  journal: "Physical Review A"
+  doi: "10.1103/zxz5-9ghf"
+  identifiers:
+    - type: other
+      value: "arXiv:2410.06803"
+      description: "arXiv preprint"
+  authors:
+    - family-names: "Singh Roy"
+      given-names: "Monalisa"
+      orcid: "https://orcid.org/0000-0002-3678-763X"
+    - family-names: "Mumford"
+      given-names: "Jesse"
+    - family-names: "Ozer"
+      given-names: "Amit"
+    - family-names: "Porat"
+      given-names: "Oded"
+    - family-names: "O'Dell"
+      given-names: "D. H. J."
+    - family-names: "Dalla Torre"
+      given-names: "Emanuele G."
