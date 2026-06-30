@@ -62,6 +62,20 @@ using Test
 
         weak = load_problem(joinpath(dir, "tfim_paramagnetic_jzz_weak.toml"))
         @test weak.Jzz == 0.2
+
+        # A misspelled key is rejected rather than silently defaulted.
+        bad = tempname() * ".toml"
+        write(bad, "N = 9\nJx = 1.5\n")
+        @test_throws ErrorException load_problem(bad)
+        rm(bad; force = true)
+
+        # A missing optional key still falls back to its default.
+        minimal = tempname() * ".toml"
+        write(minimal, "N = 9\nJxx = 0.5\nhz = 1.0\n")
+        m = load_problem(minimal)
+        @test m.Jzz == DEFAULT_JZZ
+        @test m.maxdim == DEFAULT_MAXDIM
+        rm(minimal; force = true)
     end
 
     @testset "Defaults" begin

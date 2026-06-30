@@ -4,6 +4,23 @@
 
 *Left: a caustic cast by a glass of water. Right: the same focusing reproduced in a quantum spin chain, the light cone of magnetisation after a single spin flip at the centre, position against time. This package produces the right-hand panel.*
 
+
+<div align="center">
+  <img
+    src="docs/caustics_animation.gif"
+    width="820"
+    alt="Quantum caustic propagation in the quenched TFIM (N = 79, J^xx = 0.4).
+    The spacetime diagram shows the local magnetisation difference ΔZⱼ(t) being
+    revealed in real time. Caustic fringes dressing the light-cone edge obey
+    Airy-function scaling with Berry index ζ = 2/3."
+  />
+</div>
+
+*Colour scale: magma, log scale, ΔZ ∈ [0, 2]. The central spin is flipped at
+t = 0 and the caustic fringes propagate outward at the Lieb-Robinson velocity
+v = 2J^xx, obeying the 2/3 power law of an Airy fold throughout the
+paramagnetic phase.*
+
 Better batteries, new materials, and new medicines depend on how large but finite groups of quantum particles behave together, the subject of many-body quantum dynamics, and that behaviour is hard to compute. Describing N particles exactly takes 2^N numbers, so evolving them means multiplying matrices of that size: for 20 particles, about a million by a million, near 18 terabytes, beyond most computers. Each added particle doubles the dimension, so the cost grows exponentially.
 
 Useful quantum applications involve hundreds or thousands of particles, far more than an exact calculation can hold. One question at that scale is how an error or a perturbation spreads through the dynamics, and bounding that spread in advance shows whether a simulation will hold to tolerance before expensive hardware time is spent on it, instead of running it blind and repeating it.
