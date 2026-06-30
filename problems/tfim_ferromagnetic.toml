@@ -1,4 +1,4 @@
-# Ferromagnetic phase: the exponent departs from 2/3 (Fig 4a).
+# Ferromagnetic phase: the exponent deviates from 2/3 (Fig 4a in the PRA paper).
 description = "Ferromagnetic phase, Jxx above hz. The caustic is still visible but its exponent leaves 2/3, because the z-polarised initial state is no longer adiabatically connected to the ground state."
 N = 79
 Jxx = 1.5

@@ -1,4 +1,4 @@
-# Paramagnetic phase: the universal 2/3 caustic (Figs 2 and 3a).
+# Paramagnetic phase: the universal 2/3 caustic (Figs 2 and 3a in the PRA paper).
 description = "Paramagnetic phase, Jxx below hz. The central flip opens the universal squared-Airy caustic, with the first two fringes scaling as the 2/3 exponent. This is the regime where the fitted exponent is 0.68."
 N = 79
 Jxx = 0.5

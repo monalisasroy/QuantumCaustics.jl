@@ -22,7 +22,7 @@ const DEFAULT_JZZ = 0.0                 # integrability-breaking Z Z coupling; 0
 # Evolution and truncation.
 const DEFAULT_DT = 0.1                  # Trotter step
 const DEFAULT_TTOTAL = 40.0             # total evolution time in the same units as dt
-const DEFAULT_CUTOFF = 1e-12            # MPS truncation cutoff (singular-value weight)
+const DEFAULT_CUTOFF = 1e-10            # MPS truncation cutoff (singular-value weight)
 const DEFAULT_MAXDIM = 256              # bond-dimension cap; the paper sweeps chi up to 181
 const DEFAULT_TROTTER_ORDER = 1         # first-order brickwall, matching the paper
 
