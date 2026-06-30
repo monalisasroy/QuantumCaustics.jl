@@ -1,7 +1,7 @@
 name = "QuantumCaustics"
 uuid = "3e4ed0ff-91d5-46b8-a696-dfb77970d64b"
 authors = ["Monalisa Singh Roy"]
-version = "0.1.0"
+version = "1.0.0"
 
 [deps]
 ITensors = "9136182c-28ba-11e9-034c-db9fb085ebd5"

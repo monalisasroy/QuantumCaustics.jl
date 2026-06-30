@@ -93,16 +93,26 @@ function write_caustic(res, dir::AbstractString)
     return tag
 end
 
+# The keys a problem instance may set. Any other key is a typo that would otherwise fall back
+# to a default and run with the wrong parameters, so load_problem rejects it.
+const _PROBLEM_KEYS = ("N", "Jxx", "hz", "Jzz", "dt", "T", "maxdim", "cutoff", "boundary",
+                       "description")
+
 """
     load_problem(path) -> NamedTuple
 
 Read a problem instance from a file: the Hamiltonian and run parameters, with any missing key
 filled from the defaults in parameters.jl. The file is key = value lines, the format of the
-instances in problems/. Returns a named tuple with N, Jxx, hz, Jzz, dt, ttotal, maxdim,
-cutoff, boundary, and description.
+instances in problems/. An unrecognised key is rejected, so a misspelled parameter is caught
+rather than silently defaulted. Returns a named tuple with N, Jxx, hz, Jzz, dt, ttotal,
+maxdim, cutoff, boundary, and description.
 """
 function load_problem(path::AbstractString)
     t = TOML.parsefile(path)
+    unknown = setdiff(keys(t), _PROBLEM_KEYS)
+    isempty(unknown) ||
+        error("problem instance $path has unrecognised key(s): " * join(sort(unknown), ", ") *
+              ". Allowed keys: " * join(_PROBLEM_KEYS, ", ") * ".")
     return (N = Int(get(t, "N", DEFAULT_N)),
             Jxx = Float64(get(t, "Jxx", DEFAULT_JXX)),
             hz = Float64(get(t, "hz", DEFAULT_HZ)),
