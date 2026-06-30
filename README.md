@@ -174,11 +174,11 @@ prop = exact_propagator(spec; N = 9, dt = 0.05, ttotal = 8.0)   # true dynamics 
 ```
 QuantumCaustics/
   Project.toml            one manifest; dependencies resolved on install
-  run.jl                  CLI entry point over the library
-  README.md  NOTES.md     usage; method, conventions, and results
+  run.jl                  CLI entry point to the library
+  README.md               usage; method, conventions, and results
   LICENSE  CITATION.cff   Apache 2.0 licence; software and paper citation
-  docs/                   implementation_plan.md, the method walk-through
-  references.bib          one citation-key convention
+  docs/                   arXiv preprint, the method walk-through notes
+  references.bib          has citation-key convention
   src/                    core functions and utilities
   test/                   runtests.jl, including the exact-engine cross-checks
   notebooks/              caustics_tfim.ipynb, an example notebook illustrating the package
@@ -188,7 +188,7 @@ QuantumCaustics/
 
 ## Citation
 
-This package is the implementation behind the calculations in Singh Roy et al., "Universal scaling of quantum caustics in the dynamics of interacting particles" (Physical Review A, 2026). The results were independently reproduced in Python by a coauthor as part of their project; that reproduction is cited in the current manuscript and is an independent cross-check. Cite the software through CITATION.cff and the paper through the entry in references.bib.
+This package is the implementation behind the calculations in Singh Roy et al., "Universal scaling of quantum caustics in the dynamics of interacting particles" (Physical Review A, 2026; arXiv:2410.06803). The results were independently reproduced in Python by a coauthor as part of their project; that reproduction is cited in the current manuscript and is an independent cross-check. Cite the software through CITATION.cff and the paper through the entry in references.bib.
 
 The package is also the base for the author's continuing work on quantum dynamics and measurement-induced transitions in these systems.
 
