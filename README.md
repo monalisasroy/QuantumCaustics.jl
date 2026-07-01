@@ -21,6 +21,8 @@ t = 0 and the caustic fringes propagate outward at the Lieb-Robinson velocity
 v = 2J^xx, obeying the 2/3 power law of an Airy fold throughout the
 paramagnetic phase.*
 
+## Introduction              
+
 Better batteries, new materials, and new medicines depend on how large but finite groups of quantum particles behave together, the subject of many-body quantum dynamics, and that behaviour is hard to compute. Describing N particles exactly takes 2^N numbers, so evolving them means multiplying matrices of that size: for 20 particles, about a million by a million, near 18 terabytes, beyond most computers. Each added particle doubles the dimension, so the cost grows exponentially.
 
 Useful quantum applications involve hundreds or thousands of particles, far more than an exact calculation can hold. One question at that scale is how an error or a perturbation spreads through the dynamics, and bounding that spread in advance shows whether a simulation will hold to tolerance before expensive hardware time is spent on it, instead of running it blind and repeating it.
@@ -173,12 +175,12 @@ prop = exact_propagator(spec; N = 9, dt = 0.05, ttotal = 8.0)   # true dynamics 
 
 ```
 QuantumCaustics/
-  Project.toml            one manifest; dependencies resolved on install
-  run.jl                  CLI entry point over the library
-  README.md  NOTES.md     usage; method, conventions, and results
+  Project.toml            manifest; dependencies resolved on install
+  run.jl                  CLI entry point to the library
+  README.md               context, usage, method, conventions, and results
   LICENSE  CITATION.cff   Apache 2.0 licence; software and paper citation
-  docs/                   implementation_plan.md, the method walk-through
-  references.bib          one citation-key convention
+  docs/                   arXiv preprint, the method walk-through notes
+  references.bib          contains citation-key
   src/                    core functions and utilities
   test/                   runtests.jl, including the exact-engine cross-checks
   notebooks/              caustics_tfim.ipynb, an example notebook illustrating the package
@@ -188,13 +190,13 @@ QuantumCaustics/
 
 ## Citation
 
-This package is the implementation behind the calculations in Singh Roy et al., "Universal scaling of quantum caustics in the dynamics of interacting particles" (Physical Review A, 2026). The results were independently reproduced in Python by a coauthor as part of their project; that reproduction is cited in the current manuscript and is an independent cross-check. Cite the software through CITATION.cff and the paper through the entry in references.bib.
+This package is the implementation behind the calculations in Singh Roy et al., "Universal scaling of quantum caustics in the dynamics of interacting particles" (Physical Review A, 2026; arXiv:2410.06803). The results were independently reproduced in Python by a coauthor as part of their project; that reproduction is cited in the current manuscript and is an independent cross-check. Cite the software through CITATION.cff and the paper through the entry in references.bib.
 
 The package is also the base for the author's continuing work on quantum dynamics and measurement-induced transitions in these systems.
 
 ## Status and caveats
 
-The package provides the evolution, the measurements, the two observables (the raw magnetisation and the subtracted caustic dZ), and the exact-engine cross-checks (the statevector brickwall and the dense propagator). The power-law fit that turns the caustic into the scaling exponent is left to downstream analysis; the dZ and the time axis a run writes are its input, and anyone with them can run the fit. In the paper the fitted exponent converges near 0.68, close to the theoretical 2/3, and a fully universal finite-size scaling was not reached; NOTES.md records this, and why the inhomogeneous single-flip geometry does not map onto an infinite, translationally invariant MPS. Open boundaries are the setting of the paper's numerics, where the dZ subtraction cancels the boundary.
+The package provides the evolution, the measurements, the two observables (the raw magnetisation and the subtracted caustic dZ), and the exact-engine cross-checks (the statevector brickwall and the dense propagator). The power-law fit that turns the caustic into the scaling exponent can be easily calculated from these. In the paper the fitted exponent converges near 0.68, close to the theoretical 2/3, and a fully universal finite-size scaling was not reached.
 
 ## License
 
