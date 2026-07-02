@@ -111,7 +111,7 @@ function load_problem(path::AbstractString)
     t = TOML.parsefile(path)
     unknown = setdiff(keys(t), _PROBLEM_KEYS)
     isempty(unknown) ||
-        error("problem instance $path has unrecognised key(s): " * join(sort(unknown), ", ") *
+        error("problem instance $path has unrecognised key(s): " * join(sort(collect(unknown)), ", ") *
               ". Allowed keys: " * join(_PROBLEM_KEYS, ", ") * ".")
     return (N = Int(get(t, "N", DEFAULT_N)),
             Jxx = Float64(get(t, "Jxx", DEFAULT_JXX)),
