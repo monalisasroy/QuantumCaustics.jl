@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: QuantumCaustics.jl paper
+    url: https://arxiv.org/abs/2410.06803
+    about: Please read the accompanying Physical Review A paper before filing a physics question.
