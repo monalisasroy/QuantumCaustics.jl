@@ -1,39 +1,28 @@
 # QuantumCaustics.jl
 
+Published paper: [Physical Review A 114, 022201 (2026)](https://journals.aps.org/pra/abstract/10.1103/zxz5-9ghf). arXiv: [2410.06803](https://arxiv.org/abs/2410.06803).
+
+## Introduction
+
+Better batteries, new materials, and new medicines depend on how large but finite groups of quantum particles behave together, the subject of many-body quantum dynamics, and that behaviour is hard to compute. Describing N particles exactly takes 2^N numbers, so evolving them means multiplying matrices of that size: for 20 particles, about a million by a million, near 18 terabytes, beyond most computers. Each added particle doubles the dimension, so the cost grows exponentially.
+
 ![A caustic cast by a glass of water beside the same focusing in a quantum spin chain](docs/teaser_caustics.png)
 
 *Left: a caustic cast by a glass of water. Right: the same focusing reproduced in a quantum spin chain, the light cone of magnetisation after a single spin flip at the centre, position against time. This package produces the right-hand panel.*
 
+![Local magnetisation difference in the quenched transverse-field Ising chain, N = 79, Jxx = 0.4, position against time](docs/caustics_animation.gif)
 
-<div align="center">
-  <img
-    src="docs/caustics_animation.gif"
-    width="820"
-    alt="Quantum caustic propagation in the quenched TFIM (N = 79, J^xx = 0.4).
-    The spacetime diagram shows the local magnetisation difference ΔZⱼ(t) being
-    revealed in real time. Caustic fringes dressing the light-cone edge obey
-    Airy-function scaling with Berry index ζ = 2/3."
-  />
-</div>
-
-*Colour scale: magma, log scale, ΔZ ∈ [0, 2]. The central spin is flipped at
-t = 0 and the caustic fringes propagate outward at the Lieb-Robinson velocity
-v = 2J^xx, obeying the 2/3 power law of an Airy fold throughout the
-paramagnetic phase.*
-
-## Introduction              
-
-Better batteries, new materials, and new medicines depend on how large but finite groups of quantum particles behave together, the subject of many-body quantum dynamics, and that behaviour is hard to compute. Describing N particles exactly takes 2^N numbers, so evolving them means multiplying matrices of that size: for 20 particles, about a million by a million, near 18 terabytes, beyond most computers. Each added particle doubles the dimension, so the cost grows exponentially.
+*Colour scale: magma, log scale, ΔZ ∈ [0, 2]. The central spin is flipped at t = 0 and the caustic fringes propagate outward at the Lieb-Robinson velocity v = 2Jxx, consistent with the 2/3 power law of an Airy fold expected throughout the paramagnetic phase.*
 
 Useful quantum applications involve hundreds or thousands of particles, far more than an exact calculation can hold. One question at that scale is how an error or a perturbation spreads through the dynamics, and bounding that spread in advance shows whether a simulation will hold to tolerance before expensive hardware time is spent on it, instead of running it blind and repeating it.
 
-There are two ways forward. A quantum computer would reproduce the system directly, but present-day machines are small and error-prone, and for now their noise dominates the result. The other route is to run "simulations" on ordinary computers. Many important problems and quantum states of interest are far less entangled than the worst case, which would require the complete information about a quantum system to get a meaningful result. Leveraging this, a tensor network keeps only the most relevant quantum information, the part that carries the entanglement, and drops the rest at each step. We use this idea, the density matrix renormalisation group (DMRG) for ground states and time-evolving block decimation (TEBD) for time evolution on a tensor network, to simulate the dynamics of hundreds of interacting quantum spins on a classical computer.
+There are two ways forward. A quantum computer would reproduce the system directly, but present-day machines are small and error-prone, and for now their noise dominates the result. The other route is to run "simulations" on ordinary computers. Many important problems and quantum states of interest are far less entangled than the worst case, which would require the complete information about a quantum system to get a meaningful result. Exploiting this, a tensor network keeps only the most relevant quantum information, the part that carries the entanglement, and drops the rest at each step. We use this idea, the density matrix renormalisation group (DMRG) for ground states and time-evolving block decimation (TEBD) for time evolution on a tensor network, to simulate the dynamics of hundreds of interacting quantum spins on a classical computer.
 
-This package applies TEBD to the question: when a quantum chain is disturbed at a single site, how does the disturbance spread? For example, if a spin is flipped from an otherwise ordered ground state, we track how the change spreads outward as a wave. At its front the signal concentrates into a sharp, repeating pattern, a "caustic", the same focusing of light that creates the bright patterns on the floor of a sunlit swimming pool, or the cusp of light inside the glass of water above. Catastrophe theory describes these patterns, and the spacing of the fringes shrinks with distance by a fixed power. A change in this power law also marks a phase transition, the point where the ordered phase transitions to the disordered one. In the quantum version the same pattern can also become a diagnostic. That is, studying how the spacing of its fringes scales with distance marks where the chain crosses between order and disorder.
+This package applies TEBD to the spreading of a disturbance at a single site of a quantum chain. For example, if a spin is flipped from an otherwise ordered ground state, we track how the change spreads outward as a wave. At its front the signal concentrates into a sharp, repeating pattern, a "caustic", the same focusing of light that creates the bright patterns on the floor of a sunlit swimming pool, or the cusp of light inside the glass of water above. Catastrophe theory describes these patterns, and the spacing of the fringes shrinks with distance by a fixed power. A change in this power law also marks a phase transition, the point where the ordered phase transitions to the disordered one. In the quantum version the same pattern can also become a diagnostic. That is, studying how the spacing of its fringes scales with distance marks where the chain crosses between order and disorder.
 
 This package evolves the chain, measures the magnetisation and the entanglement at every site and step, and produces the colour map in which the caustic appears. The magnetisation it records is the input any scaling analysis reads. Every run can be checked against a full exact calculation on small chains, so no result rests on a single method.
 
-On a laptop the exact engine runs out of memory near 28 spins, too few for the scaling, while the tensor network reaches several hundred; the colour map above is a 301-site run. The package produced the calculations in Singh Roy et al. (Physical Review A, 2026; arXiv:2410.06803), regenerable from a clean checkout. A coauthor reproduced them independently in Python, the cross-check cited there. It is also a base for further work on how quantum systems evolve and how measurement alters them.
+On a laptop the exact engine runs out of memory near 28 spins, too few for the scaling, while the tensor network reaches several hundred, up to 301 sites in the arXiv version of the paper; the colour map above is a 79-site run. The package produced the calculations in Singh Roy et al. (Physical Review A 114, 022201, 2026; arXiv:2410.06803), regenerable from a clean checkout. A coauthor reproduced them independently in Python, the cross-check cited there. It is also a base for further work on how quantum systems evolve and how measurement alters them.
 
 ## The model and its phases
 
@@ -47,7 +36,7 @@ After the central spin flip, a checkerboard-like pattern travels from the point 
 
 ## Install
 
-You need Julia 1.10 or later. If you do not have it, install it from the Julia website (julialang.org).
+You need Julia 1.10 or later and git. If you do not have them, install Julia from the Julia website (julialang.org) and git from git-scm.com.
 
 Clone the repository and install everything it needs:
 
@@ -81,11 +70,11 @@ Either way, open the dZ_*.png it writes to results/figures/: the light cone and 
 
 ## Problem instances
 
-The regimes of the paper are committed as named parameter files in problems/, so a result is reproduced by name rather than by retyping flags. Each is read like a parameter file and run with one command:
+The regimes of the paper are committed as named parameter files in problems/, so a result is reproduced by name rather than by retyping flags. Each is read like a parameter file and run with one command, either for a single instance or for all of them:
 
 ```bash
-julia --project=. run.jl --problem tfim_paramagnetic        # one instance
-julia --project=. run.jl --problem all                      # every instance
+julia --project=. run.jl --problem tfim_paramagnetic
+julia --project=. run.jl --problem all
 ```
 
 Each instance writes two observables into results/ as a .txt, with a matching .png in results/figures/: the raw magnetisation Z_<tag>, the measured light cone in which the boundary's reversed cone is visible, and the subtracted caustic dZ_<tag>, in which the boundary cancels and the 2/3 scaling lives. The instances are:
@@ -124,7 +113,7 @@ cmp = compare_caustic(spec; N = 9, dt = 0.1, ttotal = 10.0)
 @show cmp.dZmax cmp.dZmean cmp.dSmax
 ```
 
-On a laptop this produces a 21-site run in a few minutes, a small version of figure 2. The result carries the raw magnetisation and the half-chain entanglement at every site and step, the observables any scaling analysis reads.
+On a laptop this produces a 21-site run in a few minutes, a small version of figure 2. The result holds the raw magnetisation and the half-chain entanglement at every site and step, the observables any scaling analysis reads.
 
 ## What this computes
 
@@ -140,13 +129,10 @@ A structured walk-through of the method, the conventions, and the convergence co
 
 ## Command line and sweeps
 
-Beyond the named instances, every parameter flag takes one or more values, and the run repeats for each combination, so a sweep is one command. Each run writes both observables as data in the output directory, with matching figures in its figures/ subdirectory, "Z_<tag>" and "dZ_<tag>".
+Beyond the named instances, every parameter flag takes one or more values, and the run repeats for each combination, so a sweep is one command. Each run writes both observables as data in the output directory, with matching figures in its figures/ subdirectory, "Z_<tag>" and "dZ_<tag>". The first command below is one run, and the second sweeps Jxx across the transition, one run per value, into one directory.
 
 ```bash
-# one run
 julia --project=. run.jl --N 79 --Jxx 0.5 --hz 1.0 --T 40 --maxdim 256 --output-dir results/
-
-# sweep Jxx across the transition, one run per value, into one directory
 julia --project=. run.jl --N 79 --Jxx 0.4 0.6 0.8 1.0 1.2 --hz 1.0 --output-dir results/sweep
 ```
 
@@ -190,7 +176,7 @@ QuantumCaustics/
 
 ## Citation
 
-This package is the implementation behind the calculations in Singh Roy et al., "Universal scaling of quantum caustics in the dynamics of interacting particles" (Physical Review A, 2026; arXiv:2410.06803). The results were independently reproduced in Python by a coauthor as part of their project; that reproduction is cited in the current manuscript and is an independent cross-check. Cite the software through CITATION.cff and the paper through the entry in references.bib.
+This package is the implementation behind the calculations in Singh Roy et al., "Universal scaling of quantum caustics in the dynamics of interacting particles" (Physical Review A 114, 022201, 2026; arXiv:2410.06803). The results were independently reproduced in Python by a coauthor as part of their project; that reproduction is cited in the current manuscript and is an independent cross-check. Cite the software through CITATION.cff and the paper through the entry in references.bib.
 
 The package is also the base for the author's continuing work on quantum dynamics and measurement-induced transitions in these systems.
 
@@ -198,6 +184,6 @@ The package is also the base for the author's continuing work on quantum dynamic
 
 The package provides the evolution, the measurements, the two observables (the raw magnetisation and the subtracted caustic dZ), and the exact-engine cross-checks (the statevector brickwall and the dense propagator). The power-law fit that turns the caustic into the scaling exponent can be easily calculated from these. In the paper the fitted exponent converges near 0.68, close to the theoretical 2/3, and a fully universal finite-size scaling was not reached.
 
-## License
+## Licence
 
 Apache 2.0. Copyright 2026 Monalisa Singh Roy. See LICENSE. The software citation is in CITATION.cff and the paper in references.bib.
