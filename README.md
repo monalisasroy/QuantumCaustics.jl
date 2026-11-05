@@ -4,7 +4,7 @@ Published paper: [Physical Review A 114, 022201 (2026)](https://journals.aps.org
 
 ## Introduction
 
-Better batteries, new materials, and new medicines depend on how large but finite groups of quantum particles behave together, which is formally called "many-body quantum dynamics". In a battery electrode or a drug molecule, these particles are electrons and atomic nuclei, which interact with each other and follow quantum mechanics. The simplest such particle is a spin, or qubit, which has two states, that can be written 0 and 1, and it can also be in a combination of both. We study a chain of spins that all start in the same state, with the spin at the centre flipped. The flip spreads along the chain as a wave, and following it in time is called "time evolution".
+Better batteries, new materials, and new medicines depend on how large but finite groups of quantum particles behave together. How they change in time is the subject of "many-body quantum dynamics". In a battery electrode or a drug molecule, these particles are electrons and atomic nuclei, which interact with each other and obey quantum mechanics. The simplest such particle is a spin, or qubit, which has two states, written 0 and 1, and can also be in a superposition of both. We study a chain of spins that all start in the same state, with the spin at the centre flipped. As time passes, the spins act on each other and the state of the chain changes, which is called "time evolution". The flip then spreads along the chain as a wave in the magnetisation (the average spin along z-axis).
 
 ![A caustic cast by a glass of water beside the same focusing in a quantum spin chain](docs/teaser_caustics.png)
 
@@ -14,27 +14,27 @@ Better batteries, new materials, and new medicines depend on how large but finit
 
 *Colour scale: magma, log scale, ΔZ ∈ [0, 2]. The central spin is flipped at t = 0 and the caustic fringes propagate outward at the Lieb-Robinson velocity v = 2Jxx, consistent with the 2/3 power law of an Airy fold expected throughout the paramagnetic phase.*
 
-At the front of the wave, the signal concentrates into a sharp pattern, a "caustic", with repeating bright and dark bands called fringes. A caustic is the same focusing of light that makes the bright lines beside a glass of water, or on a swimming pool floor. Catastrophe theory describes such patterns, and the simplest one is the Airy fold. At one site, we call the delay between the first two fringes, divided by the arrival time of the first, the normalised delay. For the Airy fold, the normalised delay shrinks with the distance d from the flip as d^(-2/3). At eight times the distance, it is four times smaller. The exponent changes at a phase transition, where the chain crosses from the disordered phase to the ordered one. The fringes therefore also mark the transition.
+At the front of the wave, the magnetisation focuses into a sharp edge, a "caustic", dressed with repeating bright and dark bands called fringes. The bright lines that light makes beside a glass of water, or on a swimming pool floor, are caustics of light. Catastrophe theory classifies such patterns. The simplest is the fold, whose wave pattern is the Airy function, so it is called the Airy fold. At one site, the first two fringes arrive at times t<sub>1</sub> and t<sub>2</sub> after the flip, and we call (t<sub>2</sub> − t<sub>1</sub>)/t<sub>1</sub> the normalised delay. For the Airy fold, the normalised delay is proportional to d<sup>−2/3</sup>, where d is the distance from the flip. The exponent departs from the value 2/3 near the phase transition between the disordered and the ordered phase, so these caustics fringes also mark that transition.
 
-Computing this pattern for many spins is hard. Writing down the state of N spins takes 2^N numbers, one for each way the spins can point. That is about a million numbers for 20 spins, and about a trillion for 40, near 18 terabytes at 16 bytes per number. Each added spin doubles the count, and a time evolution repeats the calculation at every step. An exact calculation therefore stops near 28 spins on a laptop, far short of the hundreds of spins in useful quantum applications. A quantum computer would run the evolution directly, but present-day machines are small and error-prone, and for now their noise dominates the result. Beyond a few dozen qubits, no exact calculation can check what such a machine returns.
+Computing this pattern for many spins is hard. The state of N spins takes 2<sup>N</sup> complex numbers, one amplitude for each of the 2<sup>N</sup> ways the spins can point up or down. That is about a million numbers for 20 spins, and about a trillion for 40, near 18 terabytes at 16 bytes per number. Each added spin doubles the count, and each time step acts on all of them. An exact calculation that stores the state runs out of memory near 28 spins on a laptop. Useful quantum applications involve hundreds of spins. A quantum computer would run the evolution directly, but present-day machines are small and error-prone, and for now their noise dominates the result. Beyond a few dozen qubits, an exact calculation cannot check what such a machine returns.
 
-Many important states have far less entanglement, the quantum correlation between parts of a chain, than the worst case, which would need all 2^N numbers. A tensor network exploits this by keeping only the entanglement that matters, and its bond dimension caps how much it keeps. For a chain, the tensor network is a matrix product state (MPS). We use the density matrix renormalisation group (DMRG) to find ground states of an MPS and time-evolving block decimation (TEBD) to evolve it in time. Together they simulate hundreds of interacting spins on an ordinary computer.
+Many states of interest have far less entanglement, the quantum correlation between parts of a chain, than a generic state. A weakly entangled state can be written with far fewer than 2<sup>N</sup> numbers. A tensor network writes the state as a chain of small tensors. Its bond dimension, the size of the links between them, caps how much entanglement it keeps. For a chain, this tensor network is a matrix product state (MPS). We use the density matrix renormalisation group (DMRG) to find ground states as MPS, and time-evolving block decimation (TEBD) to evolve an MPS in time. Together they simulate hundreds of interacting spins on an ordinary computer.
 
-This package applies TEBD to the flipped chain. It measures the magnetisation, the average spin along z, and the entanglement at every spin and time step. It also produces the colour map in which the caustic appears. The magnetisation it records is the input for fitting the exponent of the normalised delay. Every run can be checked against a full exact calculation on small chains, so no result rests on a single method.
+This package applies TEBD to the flipped chain. It computes the magnetisation of every spin and the half-chain entanglement entropy at every time step. It also produces the colour map in which the caustic appears. The magnetisation is the input for fitting the exponent of the normalised delay. Every run can be checked against a full exact calculation on small chains, which validates the tensor-network evolution where an exact calculation is possible.
 
-We propose the fringes of one flipped qubit as a first check of a quantum computer. In the simulations of the paper, a weak extra interaction between neighbouring spins leaves the fringes in place, and a strong one washes them out. On a device that runs this circuit as intended, the fringes should therefore appear, and this package computes the expected pattern to compare with.
+We propose a first check of a quantum computer: flip one qubit in a chain, apply its interactions step by step, and look for the fringes. In the simulations of the paper, a weak extra interaction between neighbouring spins keeps the fringes, and a strong one removes them. On a device that implements the chain as intended, the fringes should appear, and this package computes the expected pattern to compare with.
 
 The tensor network reaches several hundred spins, up to 301 in the arXiv version of the paper; the colour map above is a 79-spin run. The package produced the calculations in Singh Roy et al. (Physical Review A 114, 022201, 2026; arXiv:2410.06803), regenerable from a clean checkout. A coauthor reproduced them independently in Python, the cross-check cited there. It is also a base for further work on how quantum systems evolve and how measurement alters them. A first run on 21 spins takes a few minutes on a laptop, as set out under [Run it](#run-it).
 
 ## The model and its phases
 
-In the transverse-field Ising model, Eq. 1 of the paper, each spin is coupled to its two neighbours and acted on by a transverse field,
+In the transverse-field Ising model, Eq. 1 of the paper, each spin is coupled to its nearest neighbours and acted on by a transverse field,
 
-H = - Jxx sum_j X_j X_{j+1} - hz sum_j Z_j,
+H = −Jxx Σ<sub>j</sub> X<sub>j</sub> X<sub>j+1</sub> − hz Σ<sub>j</sub> Z<sub>j</sub>,
 
-where X_j and Z_j are the Pauli operators on site j. An optional coupling adds - Jzz sum_j Z_j Z_{j+1} (Eq. 23 in the paper), which breaks the integrability of the model, that is, makes it no longer exactly solvable. Jxx is the spin-spin coupling, hz the transverse field, and Jzz is zero in the pure model and small when the scaling is tested against integrability breaking. The transition occurs at Jxx = hz. Thus, the ratio Jxx/hz determines the phase: below it the chain is paramagnetic, the disordered phase in which the field dominates, and above it the chain is ferromagnetic, the ordered phase in which the coupling dominates. The phase can also be read off from the caustic pattern.
+where X<sub>j</sub> and Z<sub>j</sub> are the Pauli operators on site j. An optional coupling adds −Jzz Σ<sub>j</sub> Z<sub>j</sub> Z<sub>j+1</sub> (Eq. 23 in the paper), which breaks the integrability of the model, that is, makes it no longer exactly solvable. Jxx is the spin-spin coupling, hz the transverse field, and Jzz is zero in the pure model and small when the scaling is tested against integrability breaking. For Jzz = 0, the transition of an infinite chain occurs at Jxx = hz. Thus, the ratio Jxx/hz determines the phase: below 1 the chain is paramagnetic, the disordered phase in which the field dominates, and above 1 it is ferromagnetic, the ordered phase in which the coupling dominates. The phase can also be read off from the caustic pattern.
 
-After the central spin flip, a checkerboard-like pattern travels from the point of the perturbation outwards in spacetime, bound by the Lieb-Robinson limit, the maximum speed at which a disturbance spreads along the chain, and the normalised delay between the first two fringes scales as a power of distance. It is known that for the simplest catastrophe, the exponent is 2/3 throughout the paramagnetic phase, the universal value of an Airy fold. The exponent deviates from 2/3 once Jxx/hz approaches 1, the phase transition point. The caustic pattern and the 2/3 scaling also survive a weak integrability-breaking perturbation Jzz, but the caustic is lost as Jzz grows. The four regimes, the two phases and weak and strong integrability breaking, are the committed problem instances in problems/, described under "Problem instances" below.
+After the central spin flip, a checkerboard-like pattern of fringes spreads outward in position and time, inside a light cone whose edge moves at the Lieb-Robinson velocity, the maximum speed at which a local change spreads along the chain. The normalised delay between the first two fringes scales as a power of the distance. In the paramagnetic phase the caustic is an Airy fold, whose exponent has the universal value 2/3. The exponent deviates from 2/3 once Jxx/hz approaches 1, the phase transition point. The caustic pattern and the 2/3 scaling also survive a weak integrability-breaking perturbation Jzz, but the caustic is lost as Jzz grows. The four regimes, the two phases and weak and strong integrability breaking, are the committed problem instances in problems/, described under "Problem instances" below.
 
 ## Install
 
@@ -68,7 +68,7 @@ For a faster first look, a small chain set by flags finishes in a few minutes on
 julia --project=. run.jl --N 21 --Jxx 0.5 --hz 1.0 --T 30 --output-dir results/
 ```
 
-Either way, open the dZ_*.png it writes to results/figures/: the light cone and its fringe pattern after a single spin flip at the centre. The matching Z_*.png is the raw magnetisation, where the boundary's reversed cone is visible.
+Either way, open the `dZ_*.png` it writes to results/figures/: the light cone and its fringe pattern after a single spin flip at the centre. The matching `Z_*.png` is the raw magnetisation, where the boundary's reversed cone is visible.
 
 ## Problem instances
 
@@ -79,16 +79,16 @@ julia --project=. run.jl --problem tfim_paramagnetic
 julia --project=. run.jl --problem all
 ```
 
-Each instance writes two observables into results/ as a .txt, with a matching .png in results/figures/: the raw magnetisation Z_<tag>, the measured light cone in which the boundary's reversed cone is visible, and the subtracted caustic dZ_<tag>, in which the boundary cancels and the 2/3 scaling lives. The instances are:
+Each instance writes two observables into results/ as a .txt, with a matching .png in results/figures/: the raw magnetisation `Z_<tag>`, the measured light cone in which the boundary's reversed cone is visible, and the subtracted caustic `dZ_<tag>`, in which the boundary cancels and the 2/3 scaling can be read. The instances are:
 
 | instance | parameters | what it shows |
 |---|---|---|
-| tfim_paramagnetic | Jxx 0.5, hz 1.0 | the universal 2/3 caustic (Figs 2, 3a) |
-| tfim_ferromagnetic | Jxx 1.5, hz 1.0 | the exponent departs from 2/3 (Fig 4a) |
-| tfim_paramagnetic_jzz_weak | Jxx 0.5, hz 1.0, Jzz 0.2 | the caustic survives weak breaking (Fig 4b) |
-| tfim_paramagnetic_jzz_strong | Jxx 0.5, hz 1.0, Jzz 0.4 | the caustic degrades |
+| `tfim_paramagnetic` | `Jxx = 0.5`, `hz = 1.0` | the universal 2/3 caustic (Figs 2, 3a) |
+| `tfim_ferromagnetic` | `Jxx = 1.5`, `hz = 1.0` | the exponent departs from 2/3 (Fig 4a) |
+| `tfim_paramagnetic_jzz_weak` | `Jxx = 0.5`, `hz = 1.0`, `Jzz = 0.2` | the caustic survives weak breaking (Fig 4b) |
+| `tfim_paramagnetic_jzz_strong` | `Jxx = 0.5`, `hz = 1.0`, `Jzz = 0.4` | the caustic degrades |
 
-The naming is tfim_<phase>, with an optional _jzz_<strength>; a new instance is one small file in problems/. These run at the paper's size, N = 79, so they take longer than the small run above.
+The naming is `tfim_<phase>`, with an optional `_jzz_<strength>`; a new instance is one small file in problems/. These run at the paper's size, N = 79, so they take longer than the small run above.
 
 ## Setting parameters
 
@@ -115,15 +115,15 @@ cmp = compare_caustic(spec; N = 9, dt = 0.1, ttotal = 10.0)
 @show cmp.dZmax cmp.dZmean cmp.dSmax
 ```
 
-On a laptop this produces a 21-spin run in a few minutes, a small version of figure 2. The result holds the raw magnetisation and the half-chain entanglement at every site and step, the observables any scaling analysis reads.
+On a laptop this produces a 21-spin run in a few minutes, a small version of figure 2. The result holds the raw magnetisation of every spin and the half-chain entanglement, both at every time step. The magnetisation is the input any scaling analysis reads.
 
 ## What this computes
 
-- The raw magnetisation <Z_j(t)> after the central quench, the measured light cone, and its subtraction dZ of Eq. 22, the magnetisation with the central spin flipped minus that of the same chain without the flip, where the caustic appears with the boundary cancelled.
+- The raw magnetisation ⟨Z<sub>j</sub>(t)⟩ after the central spin flip, the measured light cone, and its subtraction ΔZ of Eq. 22, the magnetisation with the central spin flipped minus that of the same chain without the flip, where the caustic appears with the boundary cancelled.
 - The half-chain entanglement entropy that the convergence study in Appendix A reports.
 - Validation of the evolution against the exact engine at small N, in both the magnetisation and the entanglement, run by the test suite.
 
-The two observables, the raw magnetisation and dZ, are the inputs any downstream analysis reads. The order parameter O12, the normalised delay between the first two fringes at a fixed site, and the power-law fit of its exponent against distance follow from the dZ data a run writes; this version produces the evolution, the measurements, and the caustic, and leaves the fit to the reader.
+The two observables, the raw magnetisation and ΔZ, are the inputs any downstream analysis reads. The order parameter O<sub>1,2</sub>, the normalised delay between the first two fringes at a fixed site, and the power-law fit of its exponent against distance follow from the ΔZ data a run writes; this version produces the evolution, the measurements, and the caustic, and leaves the fit to the reader.
 
 ## Method
 
@@ -131,7 +131,7 @@ A structured walk-through of the method, the conventions, and the convergence co
 
 ## Command line and sweeps
 
-Beyond the named instances, every parameter flag takes one or more values, and the run repeats for each combination, so a sweep is one command. Each run writes both observables as data in the output directory, with matching figures in its figures/ subdirectory, "Z_<tag>" and "dZ_<tag>". The first command below is one run, and the second sweeps Jxx across the transition, one run per value, into one directory. The flag --maxdim sets the bond dimension, the cap on the entanglement the tensor network keeps, and larger chains and regimes near the transition need a larger value and take longer.
+Beyond the named instances, every parameter flag takes one or more values, and the run repeats for each combination, so a sweep is one command. Each run writes both observables as data in the output directory, with matching figures in its figures/ subdirectory, `Z_<tag>` and `dZ_<tag>`. The first command below is one run, and the second sweeps Jxx across the transition, one run per value, into one directory. The flag --maxdim sets the bond dimension, the cap on the entanglement the tensor network keeps, and larger chains and regimes near the transition need a larger value and take longer.
 
 ```bash
 julia --project=. run.jl --N 79 --Jxx 0.5 --hz 1.0 --T 40 --maxdim 256 --output-dir results/
@@ -149,7 +149,7 @@ kill "$(cat sweep.pid)" 2>/dev/null
 
 ## Validating against the exact engine
 
-The exact engine is part of the package, and the test suite runs it on every change. At small N it evolves the same chain on a full statevector under the same brickwall of alternating two-spin gates that the MPS applies, with no truncation, and checks the MPS against it, which pins the operator factor and the Hamiltonian sign. The statevector holds 2^N amplitudes, so this engine reaches about 28 spins, where the MPS reaches several hundred. A dense propagator supplies the true dynamics exp(-i H dt) at small N, the reference that separates the Trotter error, which comes from splitting each time step into gates, from the MPS truncation, the information dropped to keep the bond dimension within its cap. Against the statevector brickwall the MPS agrees to truncation, which at small N is none; against the true dynamics it converges as dt decreases. The same checks are available from the REPL.
+The exact engine is part of the package, and the test suite runs it on every change. At small N it evolves the same chain on a full statevector under the same brickwall of alternating two-spin gates that the MPS applies, with no truncation, and checks the MPS against it, which pins the operator factor and the Hamiltonian sign. The statevector holds 2<sup>N</sup> amplitudes, so this engine reaches about 28 spins, where the MPS reaches several hundred. A dense propagator supplies the true dynamics exp(−iH dt) at small N, the reference that separates the Trotter error, which comes from splitting each time step into gates, from the MPS truncation, the information dropped to keep the bond dimension within its cap. Against the statevector brickwall the MPS agrees to truncation, which at small N is none; against the true dynamics it converges as dt decreases. The same checks are available from the REPL.
 
 ```julia
 spec = TransverseFieldIsing(; Jxx = 0.5, hz = 1.0)
@@ -184,7 +184,7 @@ The package is also the base for the author's continuing work on quantum dynamic
 
 ## Status and caveats
 
-The package provides the evolution, the measurements, the two observables (the raw magnetisation and the subtracted caustic dZ), and the exact-engine cross-checks (the statevector brickwall and the dense propagator). The power-law fit that turns the caustic into the scaling exponent can be easily calculated from these. In the paper the fitted exponent converges near 0.68, close to the theoretical 2/3, and a fully universal finite-size scaling was not reached. The check of a quantum computer proposed in the Introduction has not been run on hardware.
+The package provides the evolution, the measurements, the two observables (the raw magnetisation and the subtracted caustic ΔZ), and the exact-engine cross-checks (the statevector brickwall and the dense propagator). The power-law fit that turns the caustic into the scaling exponent can be computed from these. In the paper the fitted exponent converges near 0.68, close to the theoretical 2/3, and a fully universal finite-size scaling was not reached. The check of a quantum computer proposed in the Introduction has not been run on hardware.
 
 ## Licence
 
